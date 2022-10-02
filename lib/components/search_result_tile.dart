@@ -23,7 +23,7 @@ class SearchResultTile extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: getBodyHeight(context),
+            height: getBodyHeight(context) * 0.25,
             child: Row(
               children: [
                 SizedBox(

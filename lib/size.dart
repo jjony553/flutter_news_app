@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 double getBodyHeight(BuildContext context) {
-  return MediaQuery.of(context).size.height * 0.25;
+  return MediaQuery.of(context).size.height;
 }
 
 double setImageWidth(BuildContext context) {

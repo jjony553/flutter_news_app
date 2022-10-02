@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../screens/detail_screen.dart';
 
 class NewsTile extends StatelessWidget {
   final String imageSource;
@@ -18,10 +21,12 @@ class NewsTile extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 2 / 1,
-          child: Image.network(
-            imageSource,
-            fit: BoxFit.cover,
-          ),
+          child: imageSource == "null"
+              ? Image.asset("assets/images/logo.png")
+              : Image.network(
+                  imageSource,
+                  fit: BoxFit.cover,
+                ),
         ),
         SizedBox(
           height: 6,
@@ -40,13 +45,15 @@ class NewsTile extends StatelessWidget {
             SizedBox(
               width: 300,
               child: Text(
-                subtitle,
+                subtitle == "null" ? "no description" : subtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(DetailSceen());
+                },
                 icon: Icon(
                   Icons.arrow_forward_rounded,
                   color: Colors.black54,

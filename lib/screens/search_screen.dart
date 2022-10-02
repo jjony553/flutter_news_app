@@ -13,8 +13,15 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Form(
-          child: TextField(),
+          child: TextFormField(
+            autofocus: true,
+            cursorColor: Colors.black54,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+            ),
+          ),
         ),
+        elevation: 0,
       ),
       body: SafeArea(
           child: Padding(
