@@ -17,13 +17,13 @@ class Articles {
       this.content});
 
   Articles.fromjson(Map<String, dynamic> json) {
-    this.title = json['title'];
-    this.description = json['description'];
-    this.urlToImage = json['urlToImage'];
-    this.author = json['author'];
-    this.url = json['url'];
-    this.publishedAt = json['publishedAt'];
-    this.content = json['content'];
+    title = json['title'];
+    description = json['description'];
+    urlToImage = json['urlToImage'];
+    author = json['author'];
+    url = json['url'];
+    publishedAt = json['publishedAt'];
+    content = json['content'];
   }
 }
 

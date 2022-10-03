@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_news_app/screens/news_screen.dart';
 import 'package:flutter_news_app/screens/search_screen.dart';
-
 import 'home_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -13,9 +12,9 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    SearchScreen(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const HomeScreen(),
+    const SearchScreen(),
     NewsScreen(),
   ];
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app/screens/home_screen.dart';
-import 'package:flutter_news_app/screens/news_screen.dart';
 import 'package:get/get.dart';
 import 'screens/main_screen.dart';
 
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'PlayfairDisplay',
         primarySwatch: Colors.grey,
       ),
-      home: MainScreen(),
+      home: const MainScreen(),
     );
   }
 }

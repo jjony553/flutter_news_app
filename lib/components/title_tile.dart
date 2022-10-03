@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class title extends StatelessWidget {
+class TitleTile extends StatelessWidget {
   final String titleText;
-  const title({
+  const TitleTile({
     Key? key,
     required this.titleText,
   }) : super(key: key);
@@ -14,10 +14,10 @@ class title extends StatelessWidget {
       children: [
         Text(
           titleText,
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36),
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 36),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.0),
           child: Divider(
             height: 5,
             color: Colors.black,

@@ -1,57 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app/components/title.dart';
+import 'package:flutter_news_app/components/title_tile.dart';
+import 'package:get/get.dart';
 
 import '../components/search_result_tile.dart';
-import '../size.dart';
+import '../models/news_model.dart';
+import '../viewmodels/news_view_model.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  final controller = Get.put(NewsViewModel());
+  final _textController = TextEditingController();
+  String searchText = "";
+
+  @override
+  void initState() {
+    _textController.addListener(_searchText);
+    super.initState();
+  }
+
+  void _searchText() {
+    setState(() {
+      searchText = _textController.text;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Form(
-          child: TextFormField(
-            autofocus: true,
-            cursorColor: Colors.black54,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-            ),
-          ),
-        ),
-        elevation: 0,
-      ),
+      appBar: _customAppBar(),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              title(titleText: 'Search \nResult'),
-              SearchResultTile(
-                imageSource:
-                    'https://previews.123rf.com/images/zerbor/zerbor1503/zerbor150300061/37603330-%EA%B2%BD%EC%A0%9C-%EB%89%B4%EC%8A%A4-%EC%A0%9C%EB%AA%A9%EC%9D%B4-%EC%8B%A4%EB%A6%B0-%EC%8B%A0%EB%AC%B8.jpg',
-                title: "How to choose the right chair",
-                subTitle: "How to choose the right chair",
-              ),
-              SearchResultTile(
-                imageSource:
-                    'https://previews.123rf.com/images/zerbor/zerbor1503/zerbor150300061/37603330-%EA%B2%BD%EC%A0%9C-%EB%89%B4%EC%8A%A4-%EC%A0%9C%EB%AA%A9%EC%9D%B4-%EC%8B%A4%EB%A6%B0-%EC%8B%A0%EB%AC%B8.jpg',
-                title: "How to choose the right chair",
-                subTitle: "How to choose the right chair",
-              ),
-              SearchResultTile(
-                imageSource:
-                    'https://previews.123rf.com/images/zerbor/zerbor1503/zerbor150300061/37603330-%EA%B2%BD%EC%A0%9C-%EB%89%B4%EC%8A%A4-%EC%A0%9C%EB%AA%A9%EC%9D%B4-%EC%8B%A4%EB%A6%B0-%EC%8B%A0%EB%AC%B8.jpg',
-                title: "How to choose the right chair",
-                subTitle: "How to choose the right chair",
-              ),
-            ],
+        child:
+            _textController.text.isEmpty ? Container() : _searchResult(context),
+      )),
+    );
+  }
+
+  Widget _searchResult(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const TitleTile(titleText: 'Search \nResult'),
+            FutureBuilder(
+                future: controller.getSearchData(searchText),
+                builder: (context, AsyncSnapshot snapshot) {
+                  NewsModel? data = snapshot.data;
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: data!.articles!.length,
+                      itemBuilder: (context, index) {
+                        return SearchResultTile(
+                          articles: data.articles![index],
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                })
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppBar _customAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      title: Form(
+        child: TextFormField(
+          controller: _textController,
+          autofocus: true,
+          cursorColor: Colors.black54,
+          decoration: const InputDecoration(
+            prefixIcon: Icon(Icons.search),
           ),
         ),
-      )),
+      ),
+      elevation: 0,
     );
   }
 }
